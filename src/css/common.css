@@ -1,0 +1,19 @@
+.search-form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 20px 0;
+
+  background-color: #339291;
+}
+
+.search-form input {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border-color: transparent;
+}
+
+.search-form button {
+  border-radius: 8px;
+  border-color: transparent;
+}
