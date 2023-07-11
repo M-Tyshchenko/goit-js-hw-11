@@ -5,7 +5,8 @@ export class PixabayAPI {
     #API_KEY = '13806699-094791483596adb8f8eca5126';
 
     page = 1;
-    q = null;
+  q = null;
+  perPage = 40
 
     async fetchPhotos() {
         return await axios.get(`${this.#BASE_URL}`, {
@@ -16,7 +17,7 @@ export class PixabayAPI {
                 orientation: 'horizontal',
                 safesearch: true,       
                 page: this.page,
-                per_page: 40,
+                per_page: this.perPage,
       },
     });
   }
