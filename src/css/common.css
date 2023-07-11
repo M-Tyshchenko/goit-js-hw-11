@@ -17,3 +17,42 @@
   border-radius: 8px;
   border-color: transparent;
 }
+.gallery {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.photo-card {
+  flex-basis: calc((100% - 60px) / 4);
+  display: flex;
+  flex-direction: column;
+}
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  /* max-width: unset; */
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  /* justify-content: space-around; */
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.load-more {
+  display: block;
+  margin: 0 auto;
+}
+
+.load-more.is-hidden {
+  display: none;
+}
