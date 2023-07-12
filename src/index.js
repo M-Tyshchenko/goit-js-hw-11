@@ -58,7 +58,7 @@ loadMoreBtn.addEventListener('click', async () => {
             Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
         }
         createGallaryCards(data.hits);
-        lightbox.refresh();
+        
     } catch (error) {
         console.log(error.message);
     }
@@ -79,6 +79,7 @@ function createGallaryCards(images) {
         </div>`;
         galleryEl.insertAdjacentHTML('beforeend', imageCard);
     }
+    lightbox.refresh();
 }
 
     
