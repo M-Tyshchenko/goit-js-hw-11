@@ -23,13 +23,17 @@ formEl.addEventListener('submit', async (event) => {
 
     try {
         const { data } = await pixabayApi.fetchPhotos();
-
+        
         if (!data.hits.length) {           
             throw new Error();            
         }
-
+        
+        Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
         createGallaryCards(data.hits);
-        loadMoreBtn.classList.remove('is-hidden');
+        
+        if (data.totalHits > pixabayApi.perPage) {
+            loadMoreBtn.classList.remove('is-hidden');
+        }
     }
     catch (err) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
