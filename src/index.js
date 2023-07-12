@@ -1,11 +1,15 @@
 import Notiflix from 'notiflix';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import { PixabayAPI } from './js/pixabay-api';
+ 
 
 const formEl = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
 
 const pixabayApi = new PixabayAPI();
+let lightbox = new SimpleLightbox('.gallery a');
 
 formEl.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -29,8 +33,9 @@ formEl.addEventListener('submit', async (event) => {
         }
         
         Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+       
         createGallaryCards(data.hits);
-        
+
         if (data.totalHits > pixabayApi.perPage) {
             loadMoreBtn.classList.remove('is-hidden');
         }
@@ -49,10 +54,11 @@ loadMoreBtn.addEventListener('click', async () => {
         
         if (pixabayApi.page === totalPages) {
             loadMoreBtn.classList.add('is-hidden');
+            
             Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
         }
         createGallaryCards(data.hits);
-
+        lightbox.refresh();
     } catch (error) {
         console.log(error.message);
     }
@@ -61,12 +67,14 @@ loadMoreBtn.addEventListener('click', async () => {
 function createGallaryCards(images) {
     for (const image of images) {
         const imageCard = `<div class="photo-card">
-            <img src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+            <a class="photo-card-link" href="${image.largeImageURL}".jpg">
+                <img class ="photo-card-img" src="${image.webformatURL}" alt="${image.tags}" loading="lazy" />
+            </a>
             <div class="info">
                 <p class="info-item"><b>Likes</b> ${image.likes}</p>
                 <p class="info-item"><b>Views</b> ${image.views}</p>  
                 <p class="info-item"><b>Comments</b> ${image.comments}</p>
-                <p class="info-item"><b>Downloads</b>${image.downloads}</p>           
+                 <p class="info-item"><b>Downloads</b>${image.downloads}</p>           
             </div>
         </div>`;
         galleryEl.insertAdjacentHTML('beforeend', imageCard);
