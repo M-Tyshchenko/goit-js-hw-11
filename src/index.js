@@ -3,24 +3,27 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { PixabayAPI } from './js/pixabay-api';
  
-
 const formEl = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
 
 const pixabayApi = new PixabayAPI();
-let lightbox = new SimpleLightbox('.gallery a');
+let lightbox = new SimpleLightbox('.gallery a', { 
+    captionsData: 'alt',
+    captionDelay: 250,
+ });
 
 formEl.addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    galleryEl.innerHTML = '';
-    loadMoreBtn.classList.add('is-hidden');
-    pixabayApi.q = event.currentTarget.elements['searchQuery'].value;
     
+    galleryEl.innerHTML = '';
+
+    loadMoreBtn.classList.add('is-hidden');
+
+    pixabayApi.q = event.currentTarget.elements['searchQuery'].value;    
     pixabayApi.page = 1;
 
-    if (pixabayApi.q === '') {
+    if (pixabayApi.q.trim() === '') {
         Notiflix.Notify.failure('The field must not be empty');
         return;  
     }
@@ -59,8 +62,8 @@ loadMoreBtn.addEventListener('click', async () => {
         }
         createGallaryCards(data.hits);
         
-    } catch (error) {
-        console.log(error.message);
+    } catch (err) {
+        Notiflix.Notify.failure('Oops! Something went wrong. Please try again.');
     }
 })
   
