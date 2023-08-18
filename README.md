@@ -1,1 +1,1 @@
-Searching images app
+App for searching images
